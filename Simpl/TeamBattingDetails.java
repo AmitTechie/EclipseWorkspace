@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TeamBattingDetails {
-	private int nextBatsmanIndex = 2;
+	private int nextBatsmanIndex;
 	private int onStrikePlayerIndex = 0;
 	private int offStrikePlayerIndex = 1;
 	private LinkedHashSet<Integer> outPlayerList;
@@ -17,6 +17,9 @@ public class TeamBattingDetails {
 		this.isBattingOver = false;
 		this.battingLength = teamSize;
 		this.outPlayerList = new LinkedHashSet<>();
+		this.nextBatsmanIndex = 2;
+		this.onStrikePlayerIndex = 0;
+		this.offStrikePlayerIndex = 1;
 	}
 	
 
@@ -77,6 +80,7 @@ public class TeamBattingDetails {
 	}
 	
 	public boolean setPlayerAsOut(int playerIndex) {
+		
 		boolean result = outPlayerList.add(playerIndex);
 		
 		if(result == true) {
@@ -89,6 +93,7 @@ public class TeamBattingDetails {
 			updateNextBatsManIndex();
 		}
 		
+		//System.out.println("Out player: "+ playerIndex + " next on strile player: "+ getOnStrikePlayerIndex());
 		return result;
 	}
 	

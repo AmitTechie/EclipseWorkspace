@@ -2,6 +2,7 @@ package Simpl;
 
 public class Ball {
 
+	private int over;
 	private int ballNumber;
 	private Player bowler; // who thrown this ball
 	private Player batsman; // who played this ball
@@ -38,5 +39,11 @@ public class Ball {
 	}
 	public void setPlayerStatus(PLAYER_STATUS player_status) {
 		this.player_status = player_status;
+	}
+	public int getOver() {
+		return over;
+	}
+	public void setOver(int over) {
+		this.over = over;
 	}
 }

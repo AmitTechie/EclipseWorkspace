@@ -27,7 +27,7 @@ public class PlayerProbabilityData {
 		if(playerName == null) {
 			return null;
 		}
-		return playerProbabilityData.get(playerName);
+		return playerProbabilityData.getOrDefault(playerName, new int[] {39, 33, 8, 5, 4, 1, 1, 9});
 	}
 	
 }

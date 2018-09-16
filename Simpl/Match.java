@@ -108,13 +108,13 @@ public class Match{
 			
 			for(int ball = 1; ball <= 6; ball++) {
 				
-				if(over == 15) {
-					//all 6 players are out in 15th over
+				if(over == 15 && ball == 6) {
+					//player out on 15th over's last ball
 					matchData.updatePlayerScore(secondInningTeam.getOnStrikePlayer(), 0, PLAYER_STATUS.OUT);
 					secondInningTeam.markAsOutPlayer(secondInningTeam.getOnStrikePlayer());
 				}else{
-					if (over == 14 && ball == 6) {
-						//player out on 14.6 over ball
+					if (over == 14) {
+						//all 6 players out in 14th over
 						matchData.updatePlayerScore(secondInningTeam.getOnStrikePlayer(), 0, PLAYER_STATUS.OUT);
 						secondInningTeam.markAsOutPlayer(secondInningTeam.getOnStrikePlayer());
 					}else {
@@ -197,6 +197,8 @@ public class Match{
 			return;
 		}
 		
+		matchData.broadcastSecondInningTarget();
+		
 		for(int over=0; over < matchData.getOversToPlay(); over++) {
 			
 			if (isSecondInningOver()) {
@@ -205,6 +207,7 @@ public class Match{
 			
 			for(int ballCount = 1; ballCount <= MatchData.ballCountPerOver; ballCount++) {
 				Ball ball = new Ball();
+				ball.setOver(over);
 				ball.setBallNumber(ballCount);
 				playBall(secondInningTeam, ball);
 				matchData.updateInningData(ball);

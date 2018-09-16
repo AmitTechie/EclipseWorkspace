@@ -47,7 +47,7 @@ public class Player {
 	public BALL_RESULT playBall(Ball ball) {
 		
 		//no check for INVALID, NO_BALL or WIDE ball, as invalid balls are out of scope for this problem statement 
-		System.out.println(playerName);
+		//System.out.println(playerName);
 		
 		ball.setBatsman(this);
 		return playerProbability.decideBallResult(ball);
