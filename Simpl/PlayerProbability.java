@@ -1,10 +1,5 @@
 package Simpl;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class PlayerProbability {
 
 	// 0 index will represent as dot ball   =>  value at index 0, will represent as probability for a dot ball

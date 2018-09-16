@@ -1,9 +1,6 @@
 package Simpl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PlayerProbabilityData {
@@ -27,6 +24,9 @@ public class PlayerProbabilityData {
 		if(playerName == null) {
 			return null;
 		}
+		
+		//this will return default probability {39, 33, 8, 5, 4, 1, 1, 9} for the players except which are configured in above
+		//static block
 		return playerProbabilityData.getOrDefault(playerName, new int[] {39, 33, 8, 5, 4, 1, 1, 9});
 	}
 	

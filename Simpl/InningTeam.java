@@ -3,7 +3,7 @@ package Simpl;
 public class InningTeam {
 	private Team team;
 	private TeamBattingDetails teamBattingDetails;
-	private TeamBowlingDetails teamBowlingDetails;
+	private TeamBowlingDetails teamBowlingDetails; // implementation TeamBowlingDetails is out of scope of this problem statement
 	
 	public InningTeam(Team team) {
 		this.team = team;

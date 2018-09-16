@@ -1,9 +1,6 @@
 package Simpl;
 
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
 
 public class TeamBattingDetails {
 	private int nextBatsmanIndex;
@@ -42,16 +39,6 @@ public class TeamBattingDetails {
 	
 	public int getOffStrikePlayerIndex() {
 		return offStrikePlayerIndex;
-	}
-
-	private boolean setOffStrikePlayerIndex(int playerIndex) {
-		
-		if(outPlayerList.contains(playerIndex)) {
-			return false; // invalid player index
-		}
-		
-		offStrikePlayerIndex = playerIndex;
-		return true;
 	}
 	
 	public boolean changeStrike() {

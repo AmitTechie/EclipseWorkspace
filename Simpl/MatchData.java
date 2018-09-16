@@ -1,7 +1,5 @@
 package Simpl;
 
-import java.util.HashMap;
-
 public class MatchData {
 	private MatchInningData matchFirstInningData;
 	private MatchInningData matchSecondInningData;
@@ -166,7 +164,18 @@ public class MatchData {
 		}
 		return false;
 	}
+	
+	private void displayTeamsPlayerScore(Team team1, Team team2) {
+		
+		System.out.println("\nTeam "+team1.getTeamName()+" players score..\n");
+		matchFirstInningData.displayPayersScore();
 
+		System.out.println("\nTeam "+team2.getTeamName()+" players score..\n");
+		matchSecondInningData.displayPayersScore();
+		
+	}
+
+	
 	public String declareWinner(Team team1, Team team2) {
 
 		if(!isFirstInningDone() || !isSecondInningDone()) {
@@ -183,9 +192,6 @@ public class MatchData {
 			//display match result..
 			System.out.println("\n"+matchResult);
 
-			System.out.println("\nTeam "+team1.getTeamName()+" players score..\n");
-			matchFirstInningData.displayPayersScore();
-
 		}else if(isSecondTeamWinner()) {
 
 			int wicketDifferece = 10 - matchSecondInningData.getOutPlayersCount();
@@ -196,21 +202,15 @@ public class MatchData {
 			//display match result..
 			System.out.println("\n"+matchResult);
 
-			System.out.println("\nTeam "+team2.getTeamName()+" players score..\n");
-			matchSecondInningData.displayPayersScore();
-
 		}else if(isMatchTie()) {
 
 			matchResult = "Match tie between "+team1.getTeamName()+ " and "+team2.getTeamName();
 
 			//display match result..
 			System.out.println("\n"+matchResult+"\n");
-			System.out.println("Team "+team1.getTeamName()+" players score..\n");
-			matchSecondInningData.displayPayersScore();
-
-			System.out.println("Team "+team2.getTeamName()+" players score..\n");
-			matchSecondInningData.displayPayersScore();
 		}
+
+		displayTeamsPlayerScore(team1, team2);
 
 		return matchResult;
 
