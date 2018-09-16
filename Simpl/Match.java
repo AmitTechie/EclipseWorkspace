@@ -226,7 +226,6 @@ public class Match{
 	}
 	
 	public void startMatch() {
-		// TODO Auto-generated method stub
 		if(firstInningTeam == null || secondInningTeam == null) {
 			throw new RuntimeException("Invalid teams to start the Match");
 		}

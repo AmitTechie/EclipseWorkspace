@@ -181,8 +181,9 @@ public class MatchData {
 			matchResult = team1.getTeamName() + " won by " + runDifference + " runs";
 
 			//display match result..
-			System.out.println(matchResult);
+			System.out.println("\n"+matchResult);
 
+			System.out.println("\nTeam "+team1.getTeamName()+" players score..\n");
 			matchFirstInningData.displayPayersScore();
 
 		}else if(isSecondTeamWinner()) {
@@ -195,6 +196,7 @@ public class MatchData {
 			//display match result..
 			System.out.println("\n"+matchResult);
 
+			System.out.println("\nTeam "+team2.getTeamName()+" players score..\n");
 			matchSecondInningData.displayPayersScore();
 
 		}else if(isMatchTie()) {
@@ -202,10 +204,12 @@ public class MatchData {
 			matchResult = "Match tie between "+team1.getTeamName()+ " and "+team2.getTeamName();
 
 			//display match result..
-			System.out.println(matchResult);
-
+			System.out.println("\n"+matchResult+"\n");
+			System.out.println("Team "+team1.getTeamName()+" players score..\n");
 			matchSecondInningData.displayPayersScore();
 
+			System.out.println("Team "+team2.getTeamName()+" players score..\n");
+			matchSecondInningData.displayPayersScore();
 		}
 
 		return matchResult;
