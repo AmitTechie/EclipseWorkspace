@@ -74,17 +74,42 @@ public class MatchData {
 
 
 		if (!isFirstInningDone()) {
-			// broadcast first inning commentary, this is out of score
-		}
-
-		if(!isSecondInningDone()) {
+			broadcastFirstInningScore();
+		}else if(!isSecondInningDone() && matchSecondInningData.getTotalBallsPlayed() > 0) {
 			//broadcast second team target after over end
-			broadcastSecondInningTarget();
+			broadcastSecondInningTargetScore();
 		}
-
 	}
 	
-	public void broadcastSecondInningTarget() {
+	//return the first inning out players count
+	public int getFirstInningWickets() {
+		return matchFirstInningData.getOutPlayersCount();
+	}
+
+	//return the balls played by first inning team
+	public int getFirstInningBallsPlayed() {
+		return matchFirstInningData.getTotalBallsPlayed();
+	}
+	
+	//return the balls played by second inning team
+	public int getSecondInningBallsPlayed() {
+		return matchSecondInningData.getTotalBallsPlayed();
+	}
+	
+	//return the second inning out players count
+	public int getSeconInningWickets() {
+		return matchSecondInningData.getOutPlayersCount();
+	}
+	
+	
+	
+	public void broadcastFirstInningScore() {
+		if(matchFirstInningData.getTotalBallsPlayed() > 0 && matchFirstInningData.getTotalBallsPlayed() % ballCountPerOver == 0) {
+			System.out.println("Total score: "+matchFirstInningData.getTotalScore()+" after "+ matchFirstInningData.getTotalBallsPlayed()/ballCountPerOver);
+		}
+	}
+	
+	public void broadcastSecondInningTargetScore() {
 		if(matchSecondInningData.getTotalBallsPlayed() % ballCountPerOver == 0) {
 			int oversLeft = oversToPlay - matchSecondInningData.getTotalBallsPlayed()/ballCountPerOver;
 			int runsToWin = matchFirstInningData.getTotalScore() - matchSecondInningData.getTotalScore() + 1;
@@ -168,7 +193,7 @@ public class MatchData {
 			matchResult = team2.getTeamName() + " won by " + wicket + "and " + ballsLeft + " balls remaining";
 
 			//display match result..
-			System.out.println(matchResult);
+			System.out.println("\n"+matchResult);
 
 			matchSecondInningData.displayPayersScore();
 

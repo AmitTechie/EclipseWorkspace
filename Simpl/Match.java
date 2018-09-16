@@ -98,7 +98,7 @@ public class Match{
 			firstInningTeam.changePlayersStikeOrder();
 		}
 		
-		System.out.println("First Inning Score: "+ matchData.getFirstInningTotalScore());
+		System.out.println(firstInningTeam.getTeam().getTeamName()+" Score: "+ matchData.getFirstInningTotalScore());
 		
 		// As target run to win the match for second team is 40. 
 		// So I'm considering that out of 20 overs, first 16 overs played by first 7 players of Bangalore teams and they scored 0 runs and all got out.
@@ -126,8 +126,6 @@ public class Match{
 			//over end, change the strike
 			secondInningTeam.changePlayersStikeOrder();
 		}
-		
-		System.out.println("Second Inning Score: "+ matchData.getSecondInningTotalScore());
 		
 	}
 	
@@ -194,9 +192,15 @@ public class Match{
 			return;
 		}
 		
+		System.out.println("\n Team "+firstInningTeam.getTeam().getTeamName() +" batting started.. \n\n");
+		
 		playInning(firstInningTeam);
+
+		String oversPlayed = matchData.getFirstInningBallsPlayed()/MatchData.ballCountPerOver +"."+ matchData.getFirstInningBallsPlayed()%MatchData.ballCountPerOver;
+		System.out.println("\n Team "+firstInningTeam.getTeam().getTeamName() +" total score: "+ matchData.getFirstInningTotalScore()+ " after "+oversPlayed+" with total wicket "+matchData.getFirstInningWickets()+" \n\n");
 	}
 
+	
 	
 	private void playSecondInning() {
 		
@@ -204,7 +208,10 @@ public class Match{
 			return;
 		}
 		
-		matchData.broadcastSecondInningTarget();
+		int targetRunToWin = matchData.getFirstInningTotalScore() + 1;
+		System.out.println(secondInningTeam.getTeam().getTeamName() + " needs " + targetRunToWin + " runs to win from " + matchData.getOversToPlay()+" overs \n\n");
+		
+		matchData.broadcastSecondInningTargetScore();
 
 		playInning(secondInningTeam);
 	}
@@ -223,6 +230,7 @@ public class Match{
 		if(firstInningTeam == null || secondInningTeam == null) {
 			throw new RuntimeException("Invalid teams to start the Match");
 		}
+		
 		playFirstInning();
 		playSecondInning();
 		declareMatchResult();		
