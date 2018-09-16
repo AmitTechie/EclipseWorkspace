@@ -1,11 +1,26 @@
 package Simpl;
 
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+
 public class MainClass {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		//Unit tests..
+		Result result = JUnitCore.runClasses(RandomNumberGeneratorTest.class);
+		System.out.println(result.wasSuccessful());
+		
+		result = JUnitCore.runClasses(PlayerTest.class);
+		System.out.println(result.wasSuccessful());
+		
+		result = JUnitCore.runClasses(TeamTest.class);
+		System.out.println(result.wasSuccessful());
 
-		Team team1 = new Team("Chennai");
+		result = JUnitCore.runClasses(MatchTest.class);
+		System.out.println(result.wasSuccessful());
+
+/*		Team team1 = new Team("Chennai");
 		team1.addPlayer(new Player("Chennai_Player1"));
 		team1.addPlayer(new Player("Chennai_Player2"));
 		team1.addPlayer(new Player("Chennai_Player3"));
@@ -37,6 +52,6 @@ public class MainClass {
 		match.setFirstInningMatchDataForSecondInningSimulation();
 		
 		match.startMatch();
-	}
+*/	}
 
 }

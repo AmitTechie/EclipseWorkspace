@@ -1,8 +1,9 @@
 package Simpl;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Team {
 	// considering batting order [0 to 10]. First player will be on strike as opener. Alternatively we can have bating skill ratings for each players and 
@@ -17,13 +18,11 @@ public class Team {
 	
 	Team(String name){
 		this.teamName = name;
+		this.players = new ArrayList<>(teamSize);
 	}
 	
 	public boolean addPlayer(Player player) {
-		if(players == null) {
-			players = new ArrayList<>();
-		}
-		
+
 		if(players.size() == teamSize || players.contains(player)) {
 			return false;
 		}
@@ -37,6 +36,16 @@ public class Team {
 		
 		if(players == null || players.isEmpty() || existingPlayerCount+players.size() > teamSize) {
 			return false;
+		}
+		
+		//check for duplicate players
+		Set<Player> set = new HashSet<>();
+		for(Player player: players) {
+			if(set.contains(player)) {
+				//duplicate players found in the players list..
+				return false;
+			}
+			set.add(player);
 		}
 		
 		return this.players.addAll(players);
@@ -65,15 +74,5 @@ public class Team {
 		}
 		
 		return players.get(playerIndex);
-	}
-	
-	public void arrangeBattingOrder() {
-		//higher batting skill player as first player i.e. at index 0
-		players.sort((Player a, Player b) -> b.getBatingSkill() - a.getBatingSkill());
-	}
-	
-	public void arrangeBowlingOrder() {
-		//higher bowling skill player as first player i.e. at index 0
-		players.sort((Player a, Player b) -> b.getBowligSkill() - a.getBowligSkill());
 	}
 }

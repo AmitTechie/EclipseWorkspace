@@ -1,5 +1,8 @@
 package Simpl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 enum MATCH_TYPE{
 	T20,
 	ONE_DAY,
@@ -18,7 +21,7 @@ public class Match{
 
 	public Match(Team team1, Team team2, MATCH_TYPE match_type, int overs) {
 
-		if(team1 == null || !team1.isTeamSizeProper() || team2 == null || !team2.isTeamSizeProper() || team1 == team2) {
+		if(team1 == null || !team1.isTeamSizeProper() || team2 == null || !team2.isTeamSizeProper() || team1 == team2 || hasCommonPlayers(team1, team2) || team1.getTeamName().equals(team2.getTeamName())) {
 			throw new IllegalArgumentException("Invalid team");
 		}
 		
@@ -45,6 +48,32 @@ public class Match{
 		return true;
 	}
 	
+	private boolean hasCommonPlayers(Team team1, Team team2) {
+		
+		if(team1 == null || team2 == null) {
+			return false;
+		}
+		
+		//check for duplicate players
+		Set<Player> set = new HashSet<>();
+		for(int i=0; i<Team.teamSize; i++) {
+			if(set.contains(team1.getPlayer(i))) {
+				//duplicate players found in the players list..
+				return true;
+			}
+			set.add(team1.getPlayer(i));
+		}
+
+		for(int i=0; i<Team.teamSize; i++) {
+			if(set.contains(team2.getPlayer(i))) {
+				//duplicate players found in the players list..
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public boolean addTeam(Team team) {
 
 		if(firstInningTeam != null && secondInningTeam != null) {
@@ -57,10 +86,15 @@ public class Match{
 
 		if(firstInningTeam == null) {
 			this.firstInningTeam = new InningTeam(team);
+			return true;
 		}
 
 		if(secondInningTeam == null) {
+			if(hasCommonPlayers(firstInningTeam.getTeam(), team)) {
+				return false;
+			}
 			this.secondInningTeam = new InningTeam(team);
+			return true;
 		}
 
 		return true;

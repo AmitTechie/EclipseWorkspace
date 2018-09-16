@@ -18,6 +18,9 @@ public class PlayerProbabilityData {
 		playerProbabilityData.put("N.S Nodhi", new int[] {10, 40, 20, 5, 10, 1, 4, 10}); 
 		playerProbabilityData.put("R Rumrah", new int[] {20, 30, 15, 5, 5, 1, 4, 20}); 
 		playerProbabilityData.put("Shashi Henra", new int[] {30, 25, 5, 0, 5, 1, 4, 30}); 
+
+		//one entry for test player.. this player has 100% probability to hit 6. Means it will hit a six on every ball 
+		playerProbabilityData.put("TestPlayer", new int[] {0, 0, 0, 0, 0, 0, 100, 0}); 
 	}
 	
 	public static int[] getProbailityList(String playerName){
