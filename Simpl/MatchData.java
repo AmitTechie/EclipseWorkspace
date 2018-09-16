@@ -64,20 +64,20 @@ public class MatchData {
 		if(ball == null) {
 			return;
 		}
+		
+		//broadcast ball commentary..
+		{
+			String run = ball.getRunFromThisBall() > 1 ? "runs " : "run ";
+			String commentaryDataPerBall = ball.getOver()+"."+ball.getBallNumber() + " " + ball.getBatsman().getPlayerName() + " scores "+ run + ball.getRunFromThisBall();
+			System.out.println(commentaryDataPerBall);
+		}
+
 
 		if (!isFirstInningDone()) {
 			// broadcast first inning commentary, this is out of score
 		}
 
 		if(!isSecondInningDone()) {
-
-			//broadcast ball commentary..
-			{
-				String run = ball.getRunFromThisBall() > 1 ? "runs " : "run ";
-				String commentaryDataPerBall = ball.getOver()+"."+ball.getBallNumber() + " " + ball.getBatsman().getPlayerName() + " scores "+ run + ball.getRunFromThisBall();
-				System.out.println(commentaryDataPerBall);
-			}
-			
 			//broadcast second team target after over end
 			broadcastSecondInningTarget();
 		}
@@ -99,7 +99,7 @@ public class MatchData {
 			matchFirstInningData.updatePlayerRun(player, run, player_status);
 		}else {
 			matchSecondInningData.updatePlayerRun(player, run, player_status);
-			System.out.println(player.getPlayerName() + " "+ " run: "+ run + " player status: "+ player_status);
+			//System.out.println(player.getPlayerName() + " "+ " run: "+ run + " player status: "+ player_status);
 		}
 	}
 
@@ -163,13 +163,13 @@ public class MatchData {
 		}else if(isSecondTeamWinner()) {
 
 			int wicketDifferece = 10 - matchSecondInningData.getOutPlayersCount();
+			String wicket = wicketDifferece > 1 ? wicketDifferece + " wickets " : wicketDifferece + " wicket ";
 			int ballsLeft = oversToPlay*ballCountPerOver - matchSecondInningData.getTotalBallsPlayed();
-			matchResult = team2.getTeamName() + " won by " + wicketDifferece + " and " + ballsLeft + " balls remaining";
+			matchResult = team2.getTeamName() + " won by " + wicket + "and " + ballsLeft + " balls remaining";
 
 			//display match result..
 			System.out.println(matchResult);
 
-			System.out.println(matchResult);
 			matchSecondInningData.displayPayersScore();
 
 		}else if(isMatchTie()) {

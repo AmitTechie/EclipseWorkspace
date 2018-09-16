@@ -206,10 +206,13 @@ public class Match{
 			}
 			
 			for(int ballCount = 1; ballCount <= MatchData.ballCountPerOver; ballCount++) {
+				
 				Ball ball = new Ball();
 				ball.setOver(over);
 				ball.setBallNumber(ballCount);
+				
 				playBall(secondInningTeam, ball);
+				//System.out.println("over: "+over+" ball: "+ballCount+" run: "+ball.getRunFromThisBall()+" player: " + ball.getBatsman().getPlayerName() );
 				matchData.updateInningData(ball);
 				
 				if (isSecondInningOver()) {
@@ -219,8 +222,6 @@ public class Match{
 			//over end, change the strike
 			secondInningTeam.changePlayersStikeOrder();
 		}		
-
-		matchData.declareWinner(firstInningTeam.getTeam(), secondInningTeam.getTeam());
 	}
 	
 	public void declareMatchResult() {
@@ -239,9 +240,7 @@ public class Match{
 		}
 		playFirstInning();
 		playSecondInning();
-		declareMatchResult();
-		
-		
+		declareMatchResult();		
 	}
 
 }
