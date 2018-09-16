@@ -8,7 +8,7 @@ public enum BALL_RESULT {
 	FOUR_RUNS(4),
 	FIVE_RUNS(5),
 	SIX_RUNS(6),
-	OUT(0);
+	OUT(7);
 	
 	private int ballValue;
 

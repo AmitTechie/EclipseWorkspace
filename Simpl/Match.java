@@ -146,22 +146,46 @@ public class Match{
 	}
 	
 	
-	private void playBall(InningTeam batingTeam, Ball ball) {
+	private void playInning(InningTeam batingTeam) {
 		
-		//ball.setBowler(secondInningTeam.getBowler()); not required as per problem statement
-		BALL_RESULT ball_result = batingTeam.getOnStrikePlayer().playBall(ball);
-		ball.setRunFromThisBall(ball_result.getBalValue());
-		
-		
-		if(ball_result.equals(BALL_RESULT.OUT)) {
-			//player is out
-			ball.setPlayerStatus(PLAYER_STATUS.OUT);
-		}else if(ball_result.equals(BALL_RESULT.ONE_RUN) || ball_result.equals(BALL_RESULT.THREE_RUNS) || ball_result.equals(BALL_RESULT.FIVE_RUNS)) {
-			//change strike
+		for(int over=0; over < matchData.getOversToPlay(); over++) {
+			
+			if ((batingTeam.equals(firstInningTeam) && isFirstInningOver()) || (batingTeam.equals(secondInningTeam)) && isSecondInningOver()) {
+				break;
+			}
+			
+			for(int ballCount = 1; ballCount <= MatchData.ballCountPerOver; ballCount++) {
+				Ball ball = new Ball();
+				ball.setBallNumber(ballCount);
+				ball.setOver(over);
+				
+				//ball.setBowler(secondInningTeam.getBowler()); not required as per problem statement
+				BALL_RESULT ball_result = batingTeam.getOnStrikePlayer().playBall(ball);
+				
+				
+				if(ball_result.equals(BALL_RESULT.OUT)) {
+					//player is out
+					ball.setPlayerStatus(PLAYER_STATUS.OUT);
+					ball.setRunFromThisBall(0);
+					//mark player as out
+					batingTeam.markAsOutPlayer(batingTeam.getOnStrikePlayer());
+				}else if(ball_result.equals(BALL_RESULT.ONE_RUN) || ball_result.equals(BALL_RESULT.THREE_RUNS) || ball_result.equals(BALL_RESULT.FIVE_RUNS)) {
+					ball.setRunFromThisBall(ball_result.getBalValue());
+					//change strike
+					batingTeam.changePlayersStikeOrder();
+				}else if(ball_result.equals(BALL_RESULT.DOT_BALL) || ball_result.equals(BALL_RESULT.TWO_RUNS) || ball_result.equals(BALL_RESULT.FOUR_RUNS) || ball_result.equals(BALL_RESULT.SIX_RUNS) || ball_result.equals(BALL_RESULT.DOT_BALL)){
+					ball.setRunFromThisBall(ball_result.getBalValue());
+					//don't change strike
+				}
+				
+				matchData.updateInningData(ball);
+				if ((batingTeam.equals(firstInningTeam) && isFirstInningOver()) || (batingTeam.equals(secondInningTeam)) && isSecondInningOver()) {
+					break;
+				}
+			}
+			//over end, change the strike
 			batingTeam.changePlayersStikeOrder();
-		}else if(ball_result.equals(BALL_RESULT.TWO_RUNS) || ball_result.equals(BALL_RESULT.FOUR_RUNS) || ball_result.equals(BALL_RESULT.SIX_RUNS) || ball_result.equals(BALL_RESULT.DOT_BALL)){
-			//don't change strike
-		}
+		}		
 	}
 
 	private void playFirstInning() {
@@ -170,24 +194,7 @@ public class Match{
 			return;
 		}
 		
-		for(int over=0; over < matchData.getOversToPlay(); over++) {
-			
-			if (isFirstInningOver()) {
-				break;
-			}
-			
-			for(int ballCount = 1; ballCount <= MatchData.ballCountPerOver; ballCount++) {
-				Ball ball = new Ball();
-				ball.setBallNumber(ballCount);
-				playBall(firstInningTeam, ball);
-				
-				if (isFirstInningOver()) {
-					break;
-				}
-			}
-			//over end, change the strike
-			firstInningTeam.changePlayersStikeOrder();
-		}		
+		playInning(firstInningTeam);
 	}
 
 	
@@ -198,30 +205,8 @@ public class Match{
 		}
 		
 		matchData.broadcastSecondInningTarget();
-		
-		for(int over=0; over < matchData.getOversToPlay(); over++) {
-			
-			if (isSecondInningOver()) {
-				break;
-			}
-			
-			for(int ballCount = 1; ballCount <= MatchData.ballCountPerOver; ballCount++) {
-				
-				Ball ball = new Ball();
-				ball.setOver(over);
-				ball.setBallNumber(ballCount);
-				
-				playBall(secondInningTeam, ball);
-				//System.out.println("over: "+over+" ball: "+ballCount+" run: "+ball.getRunFromThisBall()+" player: " + ball.getBatsman().getPlayerName() );
-				matchData.updateInningData(ball);
-				
-				if (isSecondInningOver()) {
-					break;
-				}
-			}
-			//over end, change the strike
-			secondInningTeam.changePlayersStikeOrder();
-		}		
+
+		playInning(secondInningTeam);
 	}
 	
 	public void declareMatchResult() {

@@ -7,12 +7,20 @@ public class MatchInningData {
 	
 	private Map<Player, PlayerRunDetails> playersScoreDetails;
 	//private Map<Player, PlayerBowlingDetails> playerBowlingDetails; // this is not required in our problem statement so leaving it unimplemented
-	private int totalScore = 0;
-	private int totalBallsPlayed = 0;
-	private int outPlayersCount = 0;
+	private int totalScore;
+	private int totalBallsPlayed;
+	private int outPlayersCount;
+	
+	public MatchInningData(){
+		totalScore = 0;
+		totalBallsPlayed = 0;
+		outPlayersCount = 0;
+	}
 	
 	public void updatePlayerRun(Player player, int run, PLAYER_STATUS player_status) {
 		
+		
+		//System.out.println("player: "+ player.getPlayerName()+" run: "+ run+" status: "+ player_status);
 		if(playersScoreDetails == null) {
 			playersScoreDetails = new HashMap<>();
 		}
@@ -43,11 +51,11 @@ public class MatchInningData {
 	}
 
 	public void setTotalBallsPlayed(int totalBallsPlayed) {
-		this.totalBallsPlayed += totalBallsPlayed;
+		this.totalBallsPlayed = totalBallsPlayed;
 	}
 
 	public int getOutPlayersCount() {
-		return outPlayersCount;
+		return this.outPlayersCount;
 	}
 
 	public void setOutPlayersCount(int outPlayersCount) {
@@ -55,9 +63,16 @@ public class MatchInningData {
 	}
 	
 	public void displayPayersScore() {
+		
 		for(Player player: playersScoreDetails.keySet()) {
 			PlayerRunDetails playerRunDetails = playersScoreDetails.get(player);
-			String playerScoreCard = player.getPlayerName() + " - " + playerRunDetails.getTotalRuns() + " ("+playerRunDetails.getTotalBallsPlayed()+" balls)";
+			
+			String star = "";
+			if(playerRunDetails.getPlayerStatus().equals(PLAYER_STATUS.NOT_OUT)) {
+				star = "*";
+			}
+			
+			String playerScoreCard = player.getPlayerName() + " - " + playerRunDetails.getTotalRuns() + star + " ("+playerRunDetails.getTotalBallsPlayed()+" balls)";
 			System.out.println(playerScoreCard);
 		}
 	}
