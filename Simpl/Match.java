@@ -243,7 +243,8 @@ public class Match{
 		}
 		
 		int targetRunToWin = matchData.getFirstInningTotalScore() + 1;
-		System.out.println(secondInningTeam.getTeam().getTeamName() + " needs " + targetRunToWin + " runs to win from " + matchData.getOversToPlay()+" overs \n\n");
+		int targetOvers = matchData.getOversToPlay() - matchData.getSecondInningBallsPlayed()/MatchData.ballCountPerOver;
+		System.out.println(secondInningTeam.getTeam().getTeamName() + " needs " + targetRunToWin + " runs to win from " + targetOvers +" overs \n\n");
 		
 		matchData.broadcastSecondInningTargetScore();
 

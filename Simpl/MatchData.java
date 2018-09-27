@@ -66,7 +66,8 @@ public class MatchData {
 		//broadcast ball commentary..
 		{
 			String run = ball.getRunFromThisBall() > 1 ? "runs " : "run ";
-			String commentaryDataPerBall = ball.getOver()+"."+ball.getBallNumber() + " " + ball.getBatsman().getPlayerName() + " scores "+ run + ball.getRunFromThisBall();
+			String outStatus = ball.getPlayerStatus().equals(PLAYER_STATUS.OUT) ? ", player is OUT " : "";
+			String commentaryDataPerBall = ball.getOver()+"."+ball.getBallNumber() + " " + ball.getBatsman().getPlayerName() + " scores "+ run + ball.getRunFromThisBall() + outStatus;
 			System.out.println(commentaryDataPerBall);
 		}
 
@@ -103,7 +104,8 @@ public class MatchData {
 	
 	public void broadcastFirstInningScore() {
 		if(matchFirstInningData.getTotalBallsPlayed() > 0 && matchFirstInningData.getTotalBallsPlayed() % ballCountPerOver == 0) {
-			System.out.println("Total score: "+matchFirstInningData.getTotalScore()+" after "+ matchFirstInningData.getTotalBallsPlayed()/ballCountPerOver);
+			String over = matchFirstInningData.getTotalBallsPlayed()/ballCountPerOver > 1 ? " overs" : " over";
+			System.out.println("Total score: "+matchFirstInningData.getTotalScore()+" after "+ matchFirstInningData.getTotalBallsPlayed()/ballCountPerOver + over);
 		}
 	}
 	
